@@ -10,6 +10,7 @@ export function addMine() {
   newArr.push(newMine);
   minesArray = newArr;
   console.log(minesArray);
+  return minesArray;
 }
 // ------------------
 
