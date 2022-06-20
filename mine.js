@@ -9,9 +9,9 @@ export function addMine() {
   let newMine = getRandomMinePosition();
   newArr.push(newMine);
   minesArray = newArr;
-  console.log(minesArray);
   return minesArray;
 }
+console.log(minesArray);
 // ------------------
 
 export function onMine() {

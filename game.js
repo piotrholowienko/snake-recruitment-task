@@ -35,7 +35,7 @@ function main(currentTime) {
 
 window.requestAnimationFrame(main);
 
-window.setInterval(addMine(), 2000);
+window.setTimeout(window.setInterval(addMine, 30000), 1);
 
 function update() {
   updateSnake();
