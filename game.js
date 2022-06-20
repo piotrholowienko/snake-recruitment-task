@@ -6,7 +6,11 @@ import {
   snakeIntersection,
   snakeSpeedUpdate,
 } from "./snake.js";
-import { update as updateFood, draw as drawFood } from "./food.js";
+import {
+  update as updateFood,
+  changeFoodPosition,
+  draw as drawFood,
+} from "./food.js";
 import { draw as drawMine } from "./mine.js";
 import { outsideGrid } from "./grid.js";
 import { onMine, addMine } from "./mine.js";
@@ -15,9 +19,28 @@ let lastRenderTime = 0;
 let gameOver = false;
 const gameBoard = document.getElementById("game-board");
 
+let highScore = localStorage.getItem("highScoreLS") || 0;
+let actualScore = 0;
+
+export function updateScore() {
+  actualScore += 1;
+}
+
+function updateRecord() {
+  highScore = parseInt(actualScore);
+  localStorage.setItem("highScoreLS", highScore);
+}
+
 function main(currentTime) {
   if (gameOver) {
-    if (confirm("Ups! Koniec Gry. Naciśnij OK aby zrestartować.")) {
+    if (actualScore > highScore) {
+      updateRecord();
+    }
+    if (
+      confirm(
+        `Ups! Koniec Gry. Liczba punktów: ${actualScore}. Aktualny rekord: ${highScore}. Naciśnij OK aby zrestartować.`
+      )
+    ) {
       window.location = "/";
     }
     return;
@@ -35,7 +58,9 @@ function main(currentTime) {
 
 window.requestAnimationFrame(main);
 
-window.setTimeout(window.setInterval(addMine, 30000), 1);
+window.setTimeout(window.setInterval(addMine, 30000));
+
+window.setTimeout(window.setInterval(changeFoodPosition, 10000));
 
 function update() {
   updateSnake();
